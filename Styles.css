@@ -1,146 +1,170 @@
-*, *::after, *::before {
-    box-sizing: border-box;
-  }
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+:root {
+  --cell-size: 100px;
+  --mark-size: calc(var(--cell-size) * 0.9);
+}
+#board {
+  margin: auto auto;
+  margin-top: 25vh;
+}
+.board {
+  width: 17.5vw;
+  height: 32.5vh;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: repeat(3, auto);
+}
+body {
+  height: 100vh;
+  width: 100vw;
+}
+
+.cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.cell:first-child,
+.cell:nth-child(2),
+.cell:nth-child(3) {
+  border-top: none;
+}
+
+.cell:nth-child(3n + 1) {
+  border-left: none;
+}
+
+.cell:nth-child(3n + 3) {
+  border-right: none;
+}
+
+.cell:last-child,
+.cell:nth-child(8),
+.cell:nth-child(7) {
+  border-bottom: none;
+}
+
+.cell.x,
+.cell.circle {
+  cursor: not-allowed;
+}
+
+.cell.x::before,
+.cell.x::after,
+.cell.circle::before {
+  background-color: black;
+}
+
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after,
+.board.circle .cell:not(.x):not(.circle):hover::before {
+  background-color: lightgrey;
+}
+
+.cell.x::before,
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after {
+  content: "";
+  position: absolute;
+  width: calc(var(--mark-size) * 0.15);
+  height: var(--mark-size);
+}
+
+.cell.x::before,
+.board.x .cell:not(.x):not(.circle):hover::before {
+  transform: rotate(45deg);
+}
+
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::after {
+  transform: rotate(-45deg);
+}
+
+.cell.circle::before,
+.cell.circle::after,
+.board.circle .cell:not(.x):not(.circle):hover::before,
+.board.circle .cell:not(.x):not(.circle):hover::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+
+.cell.circle::before,
+.board.circle .cell:not(.x):not(.circle):hover::before {
+  width: var(--mark-size);
+  height: var(--mark-size);
+}
+
+.cell.circle::after,
+.board.circle .cell:not(.x):not(.circle):hover::after {
+  width: calc(var(--mark-size) * 0.7);
+  height: calc(var(--mark-size) * 0.7);
+  background-color: white;
+}
+
+.winning-message {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 5rem;
+  flex-direction: column;
+}
+
+.winning-message button {
+  font-size: 3rem;
+  background-color: white;
+  border: 1px solid black;
+  padding: 0.25em 0.5em;
+  cursor: pointer;
+}
+
+.winning-message button:hover {
+  background-color: black;
+  color: white;
+  border-color: white;
+}
+
+.winning-message.show {
+  display: flex;
+}
+
+.grass {
+  background-image: url(https://www.gardeningknowhow.com/wp-content/uploads/2020/11/tree-shade-1.jpg);
   
-  :root {
-    --cell-size: 100px;
-    --mark-size: calc(var(--cell-size) * .9);
-  }
-  
-  body {
-      background-image: url();
-  }
-  
-  .board {
-    width: 100vw;
-    height: 100vh;
-    display: grid;
-    justify-content: center;
-    align-content: center;
-    justify-items: center;
-    align-items: center;
-    grid-template-columns: repeat(3, auto)
-  }
-  
-  .cell {
-    width: var(--cell-size);
-    height: var(--cell-size);
-    border: 1px solid black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    cursor: pointer;
-  }
-  
-  .cell:first-child,
-  .cell:nth-child(2),
-  .cell:nth-child(3) {
-    border-top: none;
-  }
-  
-  .cell:nth-child(3n + 1) {
-    border-left: none;
-  }
-  
-  .cell:nth-child(3n + 3) {
-    border-right: none;
-  }
-  
-  .cell:last-child,
-  .cell:nth-child(8),
-  .cell:nth-child(7) {
-    border-bottom: none;
-  }
-  
-  .cell.x,
-  .cell.circle {
-    cursor: not-allowed;
-  }
-  
-  .cell.x::before,
-  .cell.x::after,
-  .cell.circle::before {
-    background-color: black;
-  }
-  
-  .board.x .cell:not(.x):not(.circle):hover::before,
-  .board.x .cell:not(.x):not(.circle):hover::after,
-  .board.circle .cell:not(.x):not(.circle):hover::before {
-    background-color: lightgrey;
-  }
-  
-  .cell.x::before,
-  .cell.x::after,
-  .board.x .cell:not(.x):not(.circle):hover::before,
-  .board.x .cell:not(.x):not(.circle):hover::after {
-    content: '';
-    position: absolute;
-    width: calc(var(--mark-size) * .15);
-    height: var(--mark-size);
-  }
-  
-  .cell.x::before,
-  .board.x .cell:not(.x):not(.circle):hover::before {
-    transform: rotate(45deg);
-  }
-  
-  .cell.x::after,
-  .board.x .cell:not(.x):not(.circle):hover::after {
-    transform: rotate(-45deg);
-  }
-  
-  .cell.circle::before,
-  .cell.circle::after,
-  .board.circle .cell:not(.x):not(.circle):hover::before,
-  .board.circle .cell:not(.x):not(.circle):hover::after {
-    content: '';
-    position: absolute;
-    border-radius: 50%;
-  }
-  
-  .cell.circle::before,
-  .board.circle .cell:not(.x):not(.circle):hover::before {
-    width: var(--mark-size);
-    height: var(--mark-size);
-  }
-  
-  .cell.circle::after,
-  .board.circle .cell:not(.x):not(.circle):hover::after {
-    width: calc(var(--mark-size) * .7);
-    height: calc(var(--mark-size) * .7);
-    background-color: white;
-  }
-  
-  .winning-message {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, .9);
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-size: 5rem;
-    flex-direction: column;
-  }
-  
-  .winning-message button {
-    font-size: 3rem;
-    background-color: white;
-    border: 1px solid black;
-    padding: .25em .5em;
-    cursor: pointer;
-  }
-  
-  .winning-message button:hover {
-    background-color: black;
-    color: white;
-    border-color: white;
-  }
-  
-  .winning-message.show {
-    display: flex;
-  }
+}
+.stars {
+    background-image: url(https://cdn.theatlantic.com/thumbor/VCoUZjXa6W3jOoQ9yG4pFlR59LY=/80x43:2688x1999/1200x900/media/img/mt/2015/10/Cygnus_v3_BandW/original.jpg);
+}
+.clouds {
+    background-image: url(https://blog.nature.org/science/files/2020/09/bbb2b19ed049a0bee5388dae788a9462_original-scaled.jpg);
+}
+.wars {
+    background-image: url(https://videos.clipstock.com/s3fs-public/styles/inline_image/public/preview-thumbnails/d8ace511-b2df-4f37-b4fc-56aa735fe5c6.thumbnail.jpg?VersionId=GOZBLnNno9jKeXb_XC1_FmcNVilsqbuP&itok=6cS3XxlM);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.starwars {
+    background-image: url(https://cdnb.artstation.com/p/assets/images/images/036/207/889/large/victor-k-rogue-one-darth-vader-1.jpg?1617028659);
+}
